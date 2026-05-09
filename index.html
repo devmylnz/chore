@@ -449,6 +449,43 @@ body{font-family:'Nunito',sans-serif;background:var(--nbg);min-height:100vh;colo
 </div>
 <div class="print-area" id="printArea" style="display:none"></div>
 
+<!-- Install Banner (Android/Desktop) -->
+<div class="install-banner" id="installBanner">
+  <div class="ib-icon">🌱</div>
+  <div class="ib-text">
+    <div class="ib-title">Add Mighty Sprouts to your home screen!</div>
+    <div class="ib-sub">Works offline · No app store needed</div>
+  </div>
+  <div class="ib-actions">
+    <button class="ib-install" onclick="installPWA()">Install</button>
+    <button class="ib-dismiss" onclick="dismissBanner()">✕</button>
+  </div>
+</div>
+
+<!-- iOS Instructions Overlay -->
+<div class="ios-inst" id="iosInst" onclick="closeIosInst(event)">
+  <div class="ios-card">
+    <div class="ios-title">🌱 Add to Home Screen</div>
+    <div class="ios-sub">Install Mighty Sprouts for the best experience — works offline and feels like a real app!</div>
+    <div class="ios-steps">
+      <div class="ios-step">
+        <div class="ios-step-num">1</div>
+        <div class="ios-step-txt">Tap the <b>Share button</b> <span style="font-size:16px">⬆️</span> at the bottom of your browser</div>
+      </div>
+      <div class="ios-step">
+        <div class="ios-step-num">2</div>
+        <div class="ios-step-txt">Scroll down and tap <b>"Add to Home Screen"</b> 📲</div>
+      </div>
+      <div class="ios-step">
+        <div class="ios-step-num">3</div>
+        <div class="ios-step-txt">Tap <b>"Add"</b> in the top right corner ✅</div>
+      </div>
+    </div>
+    <button class="ios-close" onclick="closeIosInst()">Got it! 🌱</button>
+  </div>
+</div>
+
+
 <script>
 const TH={
   blue:{card:'#1A6EFF',cg:'linear-gradient(135deg,#1A6EFF,#1255CC)',acc:'#FFD600',accT:'#7A5800',bg:'#E8F1FF',text:'#1255CC',bar:'#1A6EFF'},
@@ -1064,42 +1101,5 @@ if('serviceWorker' in navigator){
   }
 })();
 </script>
-<!-- Install Banner (Android/Desktop) -->
-<div class="install-banner" id="installBanner">
-  <div class="ib-icon">🌱</div>
-  <div class="ib-text">
-    <div class="ib-title">Add Mighty Sprouts to your home screen!</div>
-    <div class="ib-sub">Works offline · No app store needed</div>
-  </div>
-  <div class="ib-actions">
-    <button class="ib-install" onclick="installPWA()">Install</button>
-    <button class="ib-dismiss" onclick="dismissBanner()">✕</button>
-  </div>
-</div>
-
-<!-- iOS Instructions Overlay -->
-<div class="ios-inst" id="iosInst" onclick="closeIosInst(event)">
-  <div class="ios-card">
-    <div class="ios-title">🌱 Add to Home Screen</div>
-    <div class="ios-sub">Install Mighty Sprouts for the best experience — works offline and feels like a real app!</div>
-    <div class="ios-steps">
-      <div class="ios-step">
-        <div class="ios-step-num">1</div>
-        <div class="ios-step-txt">Tap the <b>Share button</b> <span style="font-size:16px">⬆️</span> at the bottom of your browser</div>
-      </div>
-      <div class="ios-step">
-        <div class="ios-step-num">2</div>
-        <div class="ios-step-txt">Scroll down and tap <b>"Add to Home Screen"</b> 📲</div>
-      </div>
-      <div class="ios-step">
-        <div class="ios-step-num">3</div>
-        <div class="ios-step-txt">Tap <b>"Add"</b> in the top right corner ✅</div>
-      </div>
-    </div>
-    <button class="ios-close" onclick="closeIosInst()">Got it! 🌱</button>
-  </div>
-</div>
-
-
 </body>
 </html>
