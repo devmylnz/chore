@@ -1,0 +1,966 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Mighty Sprouts — Daily Hero Challenges</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@2.44.0/tabler-icons.min.css"/>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --nb:#1A6EFF;--nbd:#1255CC;--nbl:#E8F1FF;
+  --ny:#FFD600;--nyd:#E6BE00;--nyt:#7A5800;
+  --np:#7B4FD8;--npl:#F0EAFF;
+  --nc:#FF6B4A;--ncl:#FFF0ED;
+  --ng:#22C55E;--ngl:#EDFAF3;
+  --nbg:#F5F7FF;--nw:#FFFFFF;
+  --nt:#1A1D2E;--nm:#6B7280;
+  --r:16px;--rm:12px;--rs:8px;
+  --shadow-sm:0 2px 8px rgba(26,110,255,0.08);
+  --shadow-md:0 4px 16px rgba(26,110,255,0.12);
+  --shadow-lg:0 8px 32px rgba(26,110,255,0.16);
+}
+html{scroll-behavior:smooth}
+body{font-family:'Nunito',sans-serif;background:var(--nbg);min-height:100vh;color:var(--nt)}
+
+/* ── Layout ── */
+.app{max-width:680px;margin:0 auto;padding:0 0 3rem}
+
+/* ── Header ── */
+.nk-hdr{background:linear-gradient(135deg,#1A6EFF 0%,#1255CC 60%,#0D3FA3 100%);padding:16px 20px 20px;border-radius:0 0 24px 24px;margin-bottom:1.25rem;position:relative;overflow:hidden;box-shadow:0 4px 24px rgba(26,110,255,0.35)}
+.nk-hdr::before{content:'';position:absolute;inset:0;background:url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.04'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")}
+.nk-hdr-deco{position:absolute;right:-10px;top:50%;transform:translateY(-60%);font-size:88px;opacity:0.12;pointer-events:none;filter:drop-shadow(0 0 20px rgba(255,255,255,0.2))}
+.nk-hdr-stars{position:absolute;left:20px;bottom:16px;font-size:13px;opacity:0.2;letter-spacing:4px;pointer-events:none}
+.nk-logo{display:flex;align-items:center;gap:10px;margin-bottom:14px}
+.nk-logo-badge{background:var(--ny);border-radius:12px;width:40px;height:40px;display:flex;align-items:center;justify-content:center;font-size:22px;box-shadow:0 2px 8px rgba(0,0,0,0.15);flex-shrink:0}
+.nk-logo-txt{font-size:20px;font-weight:900;color:#fff;letter-spacing:-0.5px}
+.nk-logo-sub{font-size:11px;color:rgba(255,255,255,0.65);margin-top:1px;font-weight:600;letter-spacing:0.3px}
+.nk-nav{display:flex;gap:6px;flex-wrap:wrap;align-items:center}
+.nk-nb{padding:7px 14px;border-radius:50px;border:2px solid rgba(255,255,255,0.25);background:transparent;color:rgba(255,255,255,0.85);font-size:13px;font-weight:800;cursor:pointer;transition:all .15s;font-family:'Nunito',sans-serif}
+.nk-nb.active{background:var(--ny);color:var(--nyt);border-color:var(--ny);box-shadow:0 2px 12px rgba(255,214,0,0.4)}
+.nk-nb:not(.active):hover{background:rgba(255,255,255,0.15);border-color:rgba(255,255,255,0.4)}
+.parent-btn{margin-left:auto;padding:7px 14px;border-radius:50px;background:rgba(255,255,255,0.12);border:2px solid rgba(255,255,255,0.35);color:#fff;font-size:13px;font-weight:800;cursor:pointer;font-family:'Nunito',sans-serif;display:flex;align-items:center;gap:5px;transition:all .15s}
+.parent-btn:hover{background:rgba(255,255,255,0.22)}
+.parent-btn.unlocked{background:rgba(255,214,0,0.2);border-color:var(--ny);color:var(--ny)}
+
+/* ── Hero tabs ── */
+.htabs{display:flex;gap:8px;padding:0 16px;margin-bottom:1.25rem;flex-wrap:wrap;align-items:center;overflow-x:auto;scrollbar-width:none}
+.htabs::-webkit-scrollbar{display:none}
+.htab{display:flex;align-items:center;gap:8px;padding:8px 16px;border-radius:50px;border:2.5px solid transparent;background:var(--nw);cursor:pointer;transition:all .18s;box-shadow:var(--shadow-sm);white-space:nowrap;flex-shrink:0}
+.htab.active{border-color:var(--nb);background:var(--nbl);box-shadow:0 2px 12px rgba(26,110,255,0.18)}
+.htab-av{width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px;border:2px solid rgba(0,0,0,0.06)}
+.htab-name{font-size:13px;font-weight:800;color:var(--nt)}
+.htab-pts{font-size:11px;color:var(--nm);font-weight:600}
+.htab-add{padding:8px 16px;border-radius:50px;border:2.5px dashed #CBD5E1;background:transparent;color:var(--nm);font-size:13px;font-weight:800;cursor:pointer;font-family:'Nunito',sans-serif;white-space:nowrap;flex-shrink:0;transition:all .15s}
+.htab-add:hover{border-color:var(--nb);color:var(--nb);background:var(--nbl)}
+
+/* ── Hero card ── */
+.hero-card{border-radius:var(--r);padding:1.25rem 1.5rem;margin:0 16px 1.25rem;position:relative;overflow:hidden;box-shadow:var(--shadow-lg)}
+.hc-deco{position:absolute;right:-12px;bottom:-12px;font-size:100px;opacity:0.1;pointer-events:none;line-height:1;filter:drop-shadow(0 0 10px rgba(0,0,0,0.1))}
+.hc-deco2{position:absolute;right:72px;top:10px;font-size:22px;opacity:0.2;pointer-events:none;animation:float 3s ease-in-out infinite}
+.hc-deco3{position:absolute;left:16px;bottom:12px;font-size:16px;opacity:0.15;pointer-events:none;animation:float 4s ease-in-out infinite 1s}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
+.hc-top{display:flex;align-items:center;gap:14px;margin-bottom:14px}
+.hc-av{width:62px;height:62px;border-radius:50%;border:3px solid rgba(255,255,255,0.35);display:flex;align-items:center;justify-content:center;font-size:30px;flex-shrink:0;position:relative;background:rgba(255,255,255,0.18);backdrop-filter:blur(4px)}
+.hc-lvl{position:absolute;bottom:-5px;right:-5px;background:var(--np);color:#fff;font-size:10px;font-weight:900;padding:2px 7px;border-radius:50px;border:2.5px solid white;box-shadow:0 2px 6px rgba(0,0,0,0.2)}
+.hc-name{font-size:24px;font-weight:900;color:#fff;line-height:1.2;letter-spacing:-0.5px}
+.hc-level{font-size:12px;color:rgba(255,255,255,0.72);margin-top:3px;font-weight:700}
+.hc-pts{font-size:32px;font-weight:900;line-height:1;letter-spacing:-1px}
+.hc-ptslbl{font-size:11px;color:rgba(255,255,255,0.65);font-weight:700;text-align:right}
+.xp-track{background:rgba(255,255,255,0.18);border-radius:50px;height:11px;margin-bottom:5px;overflow:hidden;box-shadow:inset 0 1px 3px rgba(0,0,0,0.15)}
+.xp-fill{height:100%;border-radius:50px;transition:width .7s cubic-bezier(.34,1.56,.64,1);position:relative;overflow:hidden}
+.xp-fill::after{content:'';position:absolute;inset:0;background:linear-gradient(90deg,transparent 0%,rgba(255,255,255,0.3) 50%,transparent 100%);animation:shimmer 2s infinite}
+@keyframes shimmer{0%{transform:translateX(-100%)}100%{transform:translateX(100%)}}
+.xp-row{display:flex;justify-content:space-between;font-size:11px;color:rgba(255,255,255,0.65);font-weight:700}
+.stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:14px}
+.stat-pill{background:rgba(255,255,255,0.14);border-radius:10px;padding:10px 6px;text-align:center;backdrop-filter:blur(4px);border:1px solid rgba(255,255,255,0.1)}
+.stat-num{font-size:20px;font-weight:900;color:#fff}
+.stat-lbl{font-size:10px;color:rgba(255,255,255,0.65);margin-top:2px;font-weight:700}
+
+/* ── White cards ── */
+.card-wrap{background:var(--nw);border-radius:var(--r);padding:1rem 1.25rem;margin:0 16px 1rem;box-shadow:var(--shadow-sm);border:1.5px solid rgba(26,110,255,0.06)}
+.sec-hd{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
+.sec-title{font-size:14px;font-weight:800;color:var(--nt);display:flex;align-items:center;gap:6px}
+.streak-days{display:flex;gap:5px}
+.sday{flex:1;border-radius:10px;padding:8px 4px;text-align:center;display:flex;flex-direction:column;align-items:center;gap:2px;transition:transform .15s}
+.sday:hover{transform:scale(1.08)}
+.sday-icon{font-size:17px;line-height:1}
+.sday-lbl{font-size:9px;font-weight:800;color:var(--nm)}
+
+/* ── Tasks ── */
+.tasks-hd{display:flex;align-items:center;justify-content:space-between;margin:0 16px 10px}
+.task-list{display:flex;flex-direction:column;gap:8px;margin:0 16px 1rem}
+.tcard{display:flex;align-items:center;gap:10px;padding:13px 15px;border-radius:var(--rm);background:var(--nw);border:2px solid #E8ECFF;cursor:pointer;transition:all .2s;box-shadow:var(--shadow-sm)}
+.tcard:hover{border-color:var(--nb);transform:translateY(-2px);box-shadow:var(--shadow-md)}
+.tcard:active{transform:translateY(0)}
+.tcard.done{opacity:0.52;border-color:#E5E7EB}
+.tcard.done .tcname{text-decoration:line-through;color:var(--nm)}
+.check-ring{width:32px;height:32px;border-radius:50%;border:2.5px solid #CBD5E1;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all .25s}
+.check-ring.done{background:var(--ng);border-color:var(--ng);box-shadow:0 2px 8px rgba(34,197,94,0.35)}
+.tcat-ico{width:38px;height:38px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0}
+.tc-body{flex:1;min-width:0}
+.tcname{font-size:14px;font-weight:800;color:var(--nt)}
+.tc-meta{display:flex;align-items:center;gap:8px;margin-top:3px}
+.diff-s{font-size:11px;font-weight:700;color:var(--nm)}
+.stk-tag{font-size:10px;font-weight:800;background:#FFF7E0;color:#A07000;padding:2px 8px;border-radius:50px;display:flex;align-items:center;gap:3px}
+.tc-pts{font-size:15px;font-weight:900}
+
+/* ── Buttons ── */
+.nk-add-btn{display:flex;align-items:center;gap:5px;padding:7px 15px;border-radius:50px;background:var(--ny);color:var(--nyt);border:none;font-size:13px;font-weight:800;cursor:pointer;font-family:'Nunito',sans-serif;transition:all .15s;box-shadow:0 2px 8px rgba(255,214,0,0.3)}
+.nk-add-btn:hover{background:var(--nyd);transform:translateY(-1px);box-shadow:0 4px 14px rgba(255,214,0,0.4)}
+.nk-ghost-btn{display:flex;align-items:center;gap:4px;padding:6px 13px;border-radius:50px;background:transparent;border:2px solid #CBD5E1;color:var(--nm);font-size:12px;font-weight:800;cursor:pointer;font-family:'Nunito',sans-serif;transition:all .15s}
+.nk-ghost-btn:hover{border-color:var(--nb);color:var(--nb);background:var(--nbl)}
+.nk-blue-btn{display:flex;align-items:center;gap:5px;padding:9px 20px;border-radius:50px;background:var(--nb);color:#fff;border:none;font-size:14px;font-weight:800;cursor:pointer;font-family:'Nunito',sans-serif;transition:all .15s;box-shadow:0 2px 10px rgba(26,110,255,0.3)}
+.nk-blue-btn:hover{background:var(--nbd);transform:translateY(-1px)}
+
+/* ── All done banner ── */
+.all-done-card{background:linear-gradient(135deg,#7B4FD8,#5E38B5);border-radius:var(--r);padding:1.5rem;text-align:center;margin:0 16px 1.25rem;position:relative;overflow:hidden;box-shadow:0 6px 24px rgba(123,79,216,0.35)}
+.adc-deco{position:absolute;right:12px;top:8px;font-size:44px;opacity:0.18;animation:float 3s ease-in-out infinite}
+.adc-icon{font-size:44px;margin-bottom:8px;display:block;animation:bounce 0.6s ease infinite alternate}
+@keyframes bounce{from{transform:translateY(0)}to{transform:translateY(-6px)}}
+.adc-title{font-size:20px;font-weight:900;color:#fff;letter-spacing:-0.3px}
+.adc-sub{font-size:14px;color:rgba(255,255,255,0.82);margin-top:5px;font-weight:700}
+.adc-badge{display:inline-block;background:var(--ny);color:var(--nyt);padding:6px 18px;border-radius:50px;font-size:13px;font-weight:800;margin-top:12px;box-shadow:0 2px 10px rgba(255,214,0,0.4)}
+
+/* ── Bonus ── */
+.bonus-intro{border-radius:var(--r);padding:1.1rem 1.4rem;margin:0 16px 1rem;display:flex;align-items:center;gap:14px;position:relative;overflow:hidden;box-shadow:var(--shadow-md)}
+.bonus-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:10px;margin:0 16px 1rem}
+.bcard{background:var(--nw);border-radius:var(--rm);border:2px solid #E8ECFF;padding:14px 10px;text-align:center;cursor:pointer;transition:all .2s;box-shadow:var(--shadow-sm)}
+.bcard:hover{border-color:var(--np);transform:translateY(-3px);box-shadow:0 6px 18px rgba(123,79,216,0.15)}
+.bcard:active{transform:translateY(0)}
+.bcard.done{opacity:0.5;border-color:#E5E7EB;pointer-events:none}
+.bcard-icon{font-size:28px;margin-bottom:7px;display:block}
+.bcard-name{font-size:12px;font-weight:800;color:var(--nt)}
+.bcard-desc{font-size:11px;color:var(--nm);margin-top:2px;font-weight:600}
+.bcard-pts{font-size:13px;font-weight:900;margin-top:8px}
+
+/* ── Bar chart ── */
+.bar-chart{display:flex;align-items:flex-end;gap:6px;height:80px;padding:0 2px;margin-bottom:4px}
+.bar-col{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px}
+.bar-fill{width:100%;border-radius:6px 6px 0 0;min-height:4px;transition:height .6s cubic-bezier(.34,1.56,.64,1)}
+.bar-day-lbl{font-size:9px;font-weight:800;color:var(--nm)}
+
+/* ── Rewards ── */
+.wallet-banner{border-radius:var(--r);padding:1.1rem 1.4rem;margin:0 16px 1rem;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;box-shadow:var(--shadow-md)}
+.wb-icon{width:46px;height:46px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:26px;background:rgba(255,255,255,0.22)}
+.wb-name{font-size:16px;font-weight:900}
+.wb-sub{font-size:11px;opacity:0.8;margin-top:2px;font-weight:700}
+.wb-pts{font-size:30px;font-weight:900;letter-spacing:-1px}
+.wb-ptslbl{font-size:11px;font-weight:700;opacity:0.75;text-align:right}
+.rewards-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(148px,1fr));gap:10px;margin:0 16px 1rem}
+.rcard{background:var(--nw);border-radius:var(--rm);border:2px solid #E8ECFF;padding:16px 12px;text-align:center;transition:all .2s;box-shadow:var(--shadow-sm)}
+.rcard:hover{transform:translateY(-3px);box-shadow:var(--shadow-md);border-color:rgba(26,110,255,0.2)}
+.rcard-icon{font-size:34px;margin-bottom:7px;display:block}
+.rcard-name{font-size:12px;font-weight:800;color:var(--nt)}
+.rcard-cost{font-size:11px;color:var(--nm);margin-top:3px;font-weight:700}
+.rcard-btn{margin-top:10px;width:100%;padding:8px;border-radius:50px;border:none;font-size:12px;font-weight:800;cursor:pointer;font-family:'Nunito',sans-serif;transition:all .15s}
+.rcard-btn.can{background:var(--ny);color:var(--nyt);box-shadow:0 2px 8px rgba(255,214,0,0.3)}
+.rcard-btn.can:hover{background:var(--nyd);transform:translateY(-1px)}
+.rcard-btn:disabled{background:#F1F5F9;color:#94A3B8;cursor:default}
+
+/* ── Leaderboard ── */
+.lb-card{background:var(--nw);border-radius:var(--r);overflow:hidden;box-shadow:var(--shadow-sm);margin:0 16px;border:1.5px solid rgba(26,110,255,0.06)}
+.lb-row{display:flex;align-items:center;gap:12px;padding:14px 18px;border-bottom:1.5px solid #F1F5F9;transition:background .15s}
+.lb-row:last-child{border-bottom:none}
+.lb-row.gold{background:linear-gradient(90deg,#FFFBEA,#fff)}
+.lb-row:hover{background:#F8FAFF}
+.lb-rank{font-size:22px;width:30px;text-align:center}
+.lb-av{width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0;border:2px solid #E8ECFF}
+.lb-info{flex:1}
+.lb-name{font-size:14px;font-weight:900;color:var(--nt)}
+.lb-meta{font-size:11px;color:var(--nm);margin-top:2px;font-weight:700;display:flex;gap:10px}
+.lb-bar-bg{height:6px;background:#F1F5F9;border-radius:50px;margin-top:6px;overflow:hidden}
+.lb-bar-fill{height:100%;border-radius:50px;transition:width .6s ease}
+.lb-score{font-size:18px;font-weight:900;min-width:55px;text-align:right}
+
+/* ── Parent panel ── */
+.parent-panel{padding:0 16px}
+.pp-banner{background:linear-gradient(135deg,#1A6EFF,#1255CC);border-radius:var(--r);padding:1.25rem 1.5rem;margin-bottom:1.25rem;position:relative;overflow:hidden;box-shadow:var(--shadow-lg)}
+.pp-banner-deco{position:absolute;right:14px;top:50%;transform:translateY(-50%);font-size:56px;opacity:0.15}
+.pp-title{font-size:20px;font-weight:900;color:#fff}
+.pp-sub{font-size:12px;color:rgba(255,255,255,0.72);margin-top:4px;font-weight:700}
+.pp-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:1.25rem}
+.pp-card{background:var(--nw);border-radius:var(--rm);border:2px solid #E8ECFF;padding:1rem 1.1rem;box-shadow:var(--shadow-sm)}
+.pp-card-title{font-size:13px;font-weight:800;color:var(--nt);margin-bottom:10px;display:flex;align-items:center;gap:6px}
+.pp-kid-row{display:flex;align-items:center;justify-content:space-between;padding:6px 0;border-bottom:1px solid #F1F5F9;font-size:13px}
+.pp-kid-row:last-child{border-bottom:none}
+.pp-kid-name{font-weight:800;color:var(--nt);display:flex;align-items:center;gap:6px;font-size:13px}
+.pp-actions{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:1.25rem}
+.pp-action-btn{background:var(--nw);border:2px solid #E8ECFF;border-radius:var(--rm);padding:1rem;text-align:center;cursor:pointer;transition:all .2s;box-shadow:var(--shadow-sm)}
+.pp-action-btn:hover{border-color:var(--nb);transform:translateY(-2px);box-shadow:var(--shadow-md)}
+.pp-action-icon{font-size:30px;margin-bottom:6px}
+.pp-action-name{font-size:13px;font-weight:800;color:var(--nt)}
+.pp-action-desc{font-size:11px;color:var(--nm);margin-top:2px;font-weight:600}
+.pin-section{background:var(--nw);border-radius:var(--rm);border:2px solid #E8ECFF;padding:1rem 1.1rem;margin-bottom:1.25rem;box-shadow:var(--shadow-sm)}
+
+/* ── PIN pad ── */
+.pin-dots{display:flex;gap:12px;justify-content:center;margin:12px 0}
+.pin-dot{width:16px;height:16px;border-radius:50%;border:2.5px solid #CBD5E1;background:transparent;transition:all .2s}
+.pin-dot.filled{background:var(--nb);border-color:var(--nb);box-shadow:0 0 8px rgba(26,110,255,0.4);transform:scale(1.15)}
+.pin-pad{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;max-width:220px;margin:0 auto}
+.pin-key{padding:13px;border-radius:var(--rm);border:2px solid #E8ECFF;background:var(--nw);font-size:18px;font-weight:900;color:var(--nt);cursor:pointer;text-align:center;transition:all .15s;font-family:'Nunito',sans-serif;box-shadow:var(--shadow-sm)}
+.pin-key:hover{background:var(--nbl);border-color:var(--nb);transform:scale(1.05)}
+.pin-key:active{transform:scale(0.97)}
+.pin-key.del{color:var(--nc)}
+.pin-key.del:hover{background:var(--ncl);border-color:var(--nc)}
+.pin-status{text-align:center;font-size:13px;font-weight:800;margin-top:8px;min-height:20px}
+
+/* ── Modals ── */
+.modal-backdrop{display:none;position:fixed;inset:0;background:rgba(10,15,40,0.6);z-index:200;align-items:flex-start;justify-content:center;padding-top:50px;backdrop-filter:blur(3px)}
+.modal-backdrop.open{display:flex;animation:fadeIn .15s ease}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+.modal{background:var(--nw);border-radius:20px;padding:1.6rem;width:92%;max-width:380px;border:2px solid rgba(26,110,255,0.1);box-shadow:0 20px 60px rgba(0,0,0,0.2);animation:slideUp .2s ease}
+@keyframes slideUp{from{transform:translateY(16px);opacity:0}to{transform:translateY(0);opacity:1}}
+.modal-title{font-size:18px;font-weight:900;margin-bottom:1rem;color:var(--nt);display:flex;align-items:center;gap:8px;letter-spacing:-0.3px}
+.field{margin-bottom:12px}
+.field label{font-size:11px;font-weight:800;color:var(--nm);display:block;margin-bottom:5px;text-transform:uppercase;letter-spacing:.6px}
+.field input,.field select{width:100%;border-radius:10px;border:2px solid #E2E8F0;padding:9px 12px;font-size:14px;font-family:'Nunito',sans-serif;color:var(--nt);background:var(--nw);transition:border-color .15s;font-weight:700}
+.field input:focus,.field select:focus{outline:none;border-color:var(--nb);box-shadow:0 0 0 3px rgba(26,110,255,0.1)}
+.modal-actions{display:flex;gap:8px;justify-content:flex-end;margin-top:16px}
+.btn-ok{padding:9px 22px;border-radius:50px;background:var(--nb);color:#fff;border:none;font-size:14px;font-weight:800;cursor:pointer;font-family:'Nunito',sans-serif;transition:all .15s;box-shadow:0 2px 10px rgba(26,110,255,0.3)}
+.btn-ok:hover{background:var(--nbd);transform:translateY(-1px)}
+.btn-cancel{padding:9px 18px;border-radius:50px;background:transparent;border:2px solid #CBD5E1;color:var(--nm);font-size:14px;font-weight:800;cursor:pointer;font-family:'Nunito',sans-serif;transition:all .15s}
+.btn-cancel:hover{border-color:#94A3B8;color:var(--nt)}
+
+/* ── Toast ── */
+.toast{position:fixed;bottom:1.75rem;left:50%;transform:translateX(-50%);background:linear-gradient(135deg,#7B4FD8,#5E38B5);color:#fff;padding:11px 24px;border-radius:50px;font-size:14px;font-weight:800;z-index:400;opacity:0;transition:opacity .25s,transform .25s;pointer-events:none;white-space:nowrap;box-shadow:0 6px 24px rgba(123,79,216,0.4)}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(-4px)}
+
+/* ── Level up overlay ── */
+.lvlup-overlay{position:fixed;inset:0;z-index:500;display:flex;align-items:center;justify-content:center;background:rgba(26,110,255,0.88);opacity:0;transition:opacity .3s;pointer-events:none;backdrop-filter:blur(6px)}
+.lvlup-overlay.show{opacity:1}
+.lvlup-box{background:var(--nw);border-radius:24px;padding:2.5rem 2rem;text-align:center;max-width:290px;border:3px solid var(--ny);box-shadow:0 20px 60px rgba(0,0,0,0.3);animation:pop .4s cubic-bezier(.34,1.56,.64,1) both}
+@keyframes pop{from{transform:scale(0.7)}to{transform:scale(1)}}
+.lvlup-icon{font-size:56px;margin-bottom:10px;display:block;animation:bounce .6s ease infinite alternate}
+.lvlup-title{font-size:24px;font-weight:900;color:var(--nb);letter-spacing:-0.5px}
+.lvlup-sub{font-size:15px;color:var(--np);margin-top:6px;font-weight:800}
+
+/* ── Print styles ── */
+@media print{
+  body{background:#fff;font-family:sans-serif}
+  .app,.nk-hdr,.htabs,.modal-backdrop,.toast,.lvlup-overlay{display:none!important}
+  .print-area{display:block!important;padding:20px}
+  .pr-header{text-align:center;border-bottom:3px solid #1A6EFF;padding-bottom:14px;margin-bottom:24px}
+  .pr-logo{font-size:13px;color:#1A6EFF;font-weight:800;letter-spacing:1px;text-transform:uppercase;margin-bottom:4px}
+  .pr-title{font-size:26px;font-weight:800;color:#1A1D2E}
+  .pr-date{font-size:13px;color:#6B7280;margin-top:4px}
+  .pr-kid-section{margin-bottom:28px;border:2px solid #E8ECFF;border-radius:14px;overflow:hidden;break-inside:avoid}
+  .pr-kid-header{padding:14px 18px;display:flex;align-items:center;gap:12px;color:#fff}
+  .pr-kid-emoji{font-size:28px}
+  .pr-kid-name{font-size:20px;font-weight:800}
+  .pr-kid-level{font-size:12px;opacity:0.82;margin-top:2px}
+  .pr-stats-row{display:flex;gap:0;background:#F5F7FF;border-bottom:1px solid #E8ECFF}
+  .pr-stat{text-align:center;flex:1;padding:12px 8px;border-right:1px solid #E8ECFF}
+  .pr-stat:last-child{border-right:none}
+  .pr-stat-num{font-size:22px;font-weight:800;color:#1A6EFF}
+  .pr-stat-lbl{font-size:10px;color:#6B7280;font-weight:600;margin-top:2px}
+  .pr-tasks-title{padding:10px 18px 6px;font-size:12px;font-weight:800;color:#6B7280;text-transform:uppercase;letter-spacing:.5px;background:#fff}
+  .pr-task-row{display:flex;align-items:center;gap:10px;padding:9px 18px;border-top:1px solid #F1F5F9;background:#fff}
+  .pr-check{width:20px;height:20px;border-radius:50%;border:2px solid #CBD5E1;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800}
+  .pr-check.done{background:#22C55E;border-color:#22C55E;color:#fff}
+  .pr-task-name{font-size:13px;flex:1;font-weight:600}
+  .pr-task-pts{font-size:12px;font-weight:800;color:#1A6EFF;white-space:nowrap}
+  .pr-streak-row{padding:10px 18px;background:#FFFBEA;font-size:12px;color:#A07000;font-weight:700;border-top:1px solid #F1F5F9}
+  .pr-notes{background:#fff;border-top:1px solid #E8ECFF;padding:10px 18px;font-size:12px;color:#6B7280;font-style:italic}
+  .pr-footer{text-align:center;margin-top:24px;font-size:11px;color:#9CA3AF;padding-top:14px;border-top:1px solid #E8ECFF}
+}
+
+/* ── PIN gate overlay ── */
+#pinGateOv{position:fixed;inset:0;background:rgba(10,15,40,0.65);z-index:300;display:flex;align-items:flex-start;justify-content:center;padding-top:60px;backdrop-filter:blur(4px)}
+
+/* ── Hero roster tasks ── */
+.roster-task{display:flex;align-items:center;gap:8px;padding:7px 12px;border-radius:9px;border:1.5px solid #E8ECFF;font-size:13px;margin-bottom:4px;background:#FAFBFF;transition:all .15s}
+.roster-task:hover{border-color:rgba(26,110,255,0.2);background:var(--nbl)}
+.roster-task-del{cursor:pointer;font-size:14px;color:var(--nc);margin-left:auto;flex-shrink:0;transition:transform .15s}
+.roster-task-del:hover{transform:scale(1.2)}
+
+.sr-only{position:absolute;width:1px;height:1px;padding:0;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+</style>
+</head>
+<body>
+<h1 class="sr-only">Mighty Sprouts — Gamified daily task tracker for kids</h1>
+<div class="app" id="app">
+  <div class="nk-hdr">
+    <div class="nk-hdr-deco">🌿</div>
+    <div class="nk-hdr-stars">★ ✦ ★ ✦ ★</div>
+    <div class="nk-logo">
+      <div class="nk-logo-badge">🌱</div>
+      <div><div class="nk-logo-txt">Mighty Sprouts</div><div class="nk-logo-sub">Grow strong, level up!</div></div>
+    </div>
+    <div class="nk-nav" id="navPills">
+      <button class="nk-nb active" onclick="setView('tasks')">⚔️ Quests</button>
+      <button class="nk-nb" onclick="setView('bonus')">✨ Bonus</button>
+      <button class="nk-nb" onclick="setView('rewards')">🎁 Rewards</button>
+      <button class="nk-nb" onclick="setView('scores')">🏆 Scores</button>
+      <button class="parent-btn" id="parentBtn" onclick="handleParentBtn()">🔒 Parent</button>
+    </div>
+  </div>
+  <div class="htabs" id="heroTabs"></div>
+  <div id="mainContent"></div>
+</div>
+
+<!-- Add kid modal -->
+<div class="modal-backdrop" id="kidModal">
+  <div class="modal">
+    <div class="modal-title">🦸 Create a new hero</div>
+    <div class="field"><label>Hero name</label><input id="kidName" placeholder="e.g. Mia"/></div>
+    <div class="field"><label>Hero animal</label>
+      <select id="kidEmoji">
+        <option value="🦁">🦁 Lion</option><option value="🐉">🐉 Dragon</option>
+        <option value="🦊">🦊 Fox</option><option value="🐼">🐼 Panda</option>
+        <option value="🦄">🦄 Unicorn</option><option value="🐯">🐯 Tiger</option>
+        <option value="🦋">🦋 Butterfly</option><option value="🦸">🦸 Hero</option>
+        <option value="🧙">🧙 Wizard</option><option value="🐬">🐬 Dolphin</option>
+      </select>
+    </div>
+    <div class="field"><label>Theme color</label>
+      <select id="kidColor">
+        <option value="blue">Blue</option><option value="purple">Purple</option>
+        <option value="coral">Coral</option><option value="green">Green</option>
+        <option value="amber">Amber</option><option value="pink">Pink</option>
+      </select>
+    </div>
+    <div class="modal-actions">
+      <button class="btn-cancel" onclick="closeModal('kidModal')">Cancel</button>
+      <button class="btn-ok" onclick="addKid()">Let's go! 🚀</button>
+    </div>
+  </div>
+</div>
+
+<!-- Add task modal -->
+<div class="modal-backdrop" id="taskModal">
+  <div class="modal">
+    <div class="modal-title">⚔️ Add a new quest</div>
+    <div class="field"><label>Quest name</label><input id="taskName" placeholder="e.g. Read 20 pages"/></div>
+    <div class="field"><label>Category</label>
+      <select id="taskCat">
+        <option value="education">📚 Education</option><option value="health">❤️ Health</option>
+        <option value="music">🎵 Music</option><option value="sport">⚡ Sport</option>
+        <option value="chores">🏠 Chores</option><option value="creativity">🎨 Creativity</option>
+        <option value="social">🤝 Social</option><option value="mindfulness">🧘 Mindfulness</option>
+      </select>
+    </div>
+    <div class="field"><label>Difficulty</label>
+      <select id="taskDiff">
+        <option value="easy">⭐ Easy — 5 pts</option>
+        <option value="normal" selected>⭐⭐ Normal — 10 pts</option>
+        <option value="hard">⭐⭐⭐ Hard — 20 pts</option>
+        <option value="legendary">🌟 Legendary — 35 pts</option>
+      </select>
+    </div>
+    <div class="modal-actions">
+      <button class="btn-cancel" onclick="closeModal('taskModal')">Cancel</button>
+      <button class="btn-ok" onclick="addTask()">Add quest!</button>
+    </div>
+  </div>
+</div>
+
+<!-- Set PIN modal -->
+<div class="modal-backdrop" id="setPinModal">
+  <div class="modal">
+    <div class="modal-title">🔐 Set parent PIN</div>
+    <p style="font-size:13px;color:var(--nm);margin-bottom:1rem;font-weight:700;line-height:1.5">Choose a 4-digit PIN to protect parent settings. Kids won't be able to access this area or approve their own rewards.</p>
+    <div class="field"><label>New PIN (4 digits)</label><input id="newPin" type="password" inputmode="numeric" maxlength="4" placeholder="e.g. 1234"/></div>
+    <div class="field"><label>Confirm PIN</label><input id="confirmPin" type="password" inputmode="numeric" maxlength="4" placeholder="Repeat PIN"/></div>
+    <div id="setPinError" style="color:#E24B4A;font-size:12px;font-weight:800;min-height:16px;margin-top:4px"></div>
+    <div class="modal-actions">
+      <button class="btn-cancel" onclick="closeModal('setPinModal')">Cancel</button>
+      <button class="btn-ok" onclick="savePin()">Set PIN 🔐</button>
+    </div>
+  </div>
+</div>
+
+<!-- Reward approval modal -->
+<div class="modal-backdrop" id="rewardApprovalModal">
+  <div class="modal">
+    <div class="modal-title">🎁 Reward approval</div>
+    <p style="font-size:14px;color:var(--nt);margin-bottom:1rem;font-weight:800" id="approvalText">Emma wants to redeem "Movie night" for 80 pts.</p>
+    <p style="font-size:13px;color:var(--nm);margin-bottom:12px;font-weight:700">Enter your parent PIN to approve:</p>
+    <div class="pin-dots" id="approvalDots"></div>
+    <div class="pin-pad" id="approvalPad"></div>
+    <div class="pin-status" id="approvalStatus"></div>
+    <div class="modal-actions" style="margin-top:1rem">
+      <button class="btn-cancel" onclick="closeModal('rewardApprovalModal')">Cancel</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+<div class="lvlup-overlay" id="lvlup">
+  <div class="lvlup-box">
+    <span class="lvlup-icon">🌟</span>
+    <div class="lvlup-title" id="lvlup-title">Level up!</div>
+    <div class="lvlup-sub" id="lvlup-sub">You're now an Adventurer!</div>
+  </div>
+</div>
+<div class="print-area" id="printArea" style="display:none"></div>
+
+<script>
+const TH={
+  blue:{card:'#1A6EFF',cg:'linear-gradient(135deg,#1A6EFF,#1255CC)',acc:'#FFD600',accT:'#7A5800',bg:'#E8F1FF',text:'#1255CC',bar:'#1A6EFF'},
+  purple:{card:'#7B4FD8',cg:'linear-gradient(135deg,#7B4FD8,#5E38B5)',acc:'#FFD600',accT:'#7A5800',bg:'#F0EAFF',text:'#5E38B5',bar:'#7B4FD8'},
+  coral:{card:'#FF6B4A',cg:'linear-gradient(135deg,#FF6B4A,#D8441F)',acc:'#FFD600',accT:'#7A5800',bg:'#FFF0ED',text:'#D8441F',bar:'#FF6B4A'},
+  green:{card:'#22C55E',cg:'linear-gradient(135deg,#22C55E,#15803D)',acc:'#FFD600',accT:'#7A5800',bg:'#EDFAF3',text:'#15803D',bar:'#22C55E'},
+  amber:{card:'#F59E0B',cg:'linear-gradient(135deg,#F59E0B,#B45309)',acc:'#fff',accT:'#7A5800',bg:'#FFFBEA',text:'#B45309',bar:'#F59E0B'},
+  pink:{card:'#EC4899',cg:'linear-gradient(135deg,#EC4899,#BE185D)',acc:'#FFD600',accT:'#7A5800',bg:'#FDF2F8',text:'#BE185D',bar:'#EC4899'},
+};
+const CAT={
+  education:{emoji:'📚',bg:'#DBEAFE',col:'#1D4ED8'},health:{emoji:'❤️',bg:'#FEE2E2',col:'#B91C1C'},
+  music:{emoji:'🎵',bg:'#EDE9FE',col:'#6D28D9'},sport:{emoji:'⚡',bg:'#FEF3C7',col:'#92400E'},
+  chores:{emoji:'🏠',bg:'#D1FAE5',col:'#065F46'},creativity:{emoji:'🎨',bg:'#FCE7F3',col:'#9D174D'},
+  social:{emoji:'🤝',bg:'#CFFAFE',col:'#155E75'},mindfulness:{emoji:'🧘',bg:'#F3F4F6',col:'#374151'},
+};
+const DIFF={easy:{pts:5,stars:'⭐'},normal:{pts:10,stars:'⭐⭐'},hard:{pts:20,stars:'⭐⭐⭐'},legendary:{pts:35,stars:'🌟'}};
+const LEVELS=['Rookie','Scout','Explorer','Adventurer','Champion','Legend','Master'];
+const LXP=[0,50,150,300,500,800,1200];
+const DAYS=['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
+const BONUSES=[
+  {id:'b1',name:'Help a sibling',desc:'Show kindness',pts:15,icon:'🤝'},
+  {id:'b2',name:'Extra reading',desc:'+20 min today',pts:20,icon:'📖'},
+  {id:'b3',name:'Tidy up unprompted',desc:'Surprise everyone!',pts:25,icon:'✨'},
+  {id:'b4',name:'Drink 6 glasses',desc:'Stay hydrated',pts:15,icon:'💧'},
+  {id:'b5',name:'Learn a new word',desc:'Expand vocab',pts:10,icon:'🔤'},
+  {id:'b6',name:'10 min meditation',desc:'Calm your mind',pts:20,icon:'🧘'},
+];
+const REWARDS=[
+  {id:'r1',name:'30 min extra screen time',icon:'📱',cost:50},
+  {id:'r2',name:"Choose tonight's dinner",icon:'🍕',cost:40},
+  {id:'r3',name:'Bedtime 30 min later',icon:'🌙',cost:60},
+  {id:'r4',name:"Pick tonight's movie",icon:'🎬',cost:80},
+  {id:'r5',name:'Sticker pack',icon:'⭐',cost:30},
+  {id:'r6',name:'No chores day',icon:'🏖️',cost:100},
+  {id:'r7',name:'Sleepover with friend',icon:'🏕️',cost:120},
+  {id:'r8',name:'Special dessert',icon:'🍰',cost:25},
+];
+
+function getLvl(xp){for(let i=LXP.length-1;i>=0;i--)if(xp>=LXP[i])return i;return 0;}
+function nxtXP(xp){const l=getLvl(xp);return LXP[l+1]||LXP[LXP.length-1];}
+function prvXP(xp){return LXP[getLvl(xp)];}
+
+const DEF=()=>({view:'tasks',activeKid:0,nextKidId:3,nextTaskId:20,parentPin:null,parentUnlocked:false,kids:[
+  {id:1,name:'Emma',emoji:'🦁',color:'blue',totalXp:120,spentPts:0,
+   tasks:[{id:1,name:'Daily homework',cat:'education',diff:'hard',done:false,streak:3},{id:2,name:'30 min piano',cat:'music',diff:'normal',done:false,streak:5},{id:3,name:'Brush teeth ×2',cat:'health',diff:'easy',done:false,streak:7},{id:4,name:'Clean room',cat:'chores',diff:'normal',done:false,streak:2},{id:5,name:'Draw or paint',cat:'creativity',diff:'easy',done:false,streak:1}],
+   bonusDone:[],streak:[true,true,true,false,true,true,false],weeklyXp:[30,40,55,20,60,70,0]},
+  {id:2,name:'Luca',emoji:'🐉',color:'purple',totalXp:85,spentPts:0,
+   tasks:[{id:1,name:'Daily homework',cat:'education',diff:'hard',done:false,streak:4},{id:2,name:'30 min reading',cat:'education',diff:'normal',done:false,streak:2},{id:3,name:'Brush teeth ×2',cat:'health',diff:'easy',done:false,streak:5},{id:4,name:'Tidy toys',cat:'chores',diff:'easy',done:false,streak:1},{id:5,name:'10 min stretching',cat:'sport',diff:'easy',done:false,streak:3}],
+   bonusDone:[],streak:[true,false,true,true,true,false,false],weeklyXp:[20,0,35,40,30,0,0]},
+]});
+
+let S;
+try{const d=localStorage.getItem('nkqb4');S=d?JSON.parse(d):DEF();}
+catch(e){S=DEF();}
+S.parentUnlocked=false;
+const save=()=>{try{localStorage.setItem('nkqb4',JSON.stringify(S));}catch(e){}};
+
+let pendingReward=null;
+let pinEntry='';
+
+function setView(v){
+  if(v==='parent'&&S.parentPin&&!S.parentUnlocked){showPinGate('parent');return;}
+  S.view=v;
+  document.querySelectorAll('.nk-nb').forEach((b,i)=>b.classList.toggle('active',['tasks','bonus','rewards','scores'][i]===v));
+  updateParentBtn();render();
+}
+function setViewDirect(v){
+  S.view=v;
+  document.querySelectorAll('.nk-nb').forEach(b=>b.classList.remove('active'));
+  updateParentBtn();render();
+}
+function updateParentBtn(){
+  const btn=document.getElementById('parentBtn');
+  if(S.parentUnlocked){btn.textContent='🔓 Parent';btn.classList.add('unlocked');}
+  else{btn.textContent='🔒 Parent';btn.classList.remove('unlocked');}
+}
+function handleParentBtn(){
+  if(S.parentPin&&!S.parentUnlocked){showPinGate('parent');return;}
+  setViewDirect('parent');
+}
+function setKid(i){S.activeKid=i;render();}
+
+function render(){
+  renderTabs();
+  const k=S.kids[S.activeKid];
+  if(!k&&S.view!=='scores'&&S.view!=='parent'){
+    document.getElementById('mainContent').innerHTML='<p style="text-align:center;padding:3rem;color:#6B7280;font-size:15px;font-weight:800">Add your first hero above to begin! 🚀</p>';return;
+  }
+  if(S.view==='tasks')renderTasks(k);
+  else if(S.view==='bonus')renderBonus(k);
+  else if(S.view==='rewards')renderRewards(k);
+  else if(S.view==='scores')renderScores();
+  else if(S.view==='parent')renderParent();
+}
+
+function renderTabs(){
+  const el=document.getElementById('heroTabs');
+  let h=S.kids.map((k,i)=>{
+    const t=TH[k.color]||TH.blue;const pts=k.totalXp-k.spentPts;const a=S.activeKid===i;
+    return`<div class="htab${a?' active':''}" onclick="setKid(${i})" style="${a?'border-color:'+t.bar:''}">
+      <div class="htab-av" style="background:${t.bg}">${k.emoji}</div>
+      <div><div class="htab-name">${k.name}</div><div class="htab-pts" style="${a?'color:'+t.bar:''}">${pts} pts</div></div>
+    </div>`;
+  }).join('');
+  h+=`<button class="htab-add" onclick="addHeroGuard()">+ New hero</button>`;
+  el.innerHTML=h;
+}
+
+function addHeroGuard(){
+  if(S.parentPin&&!S.parentUnlocked){showToast('🔒 Unlock parent mode first!');return;}
+  openModal('kidModal');
+}
+
+function renderTasks(k){
+  if(!k)return;
+  const t=TH[k.color]||TH.blue;const xp=k.totalXp;const pts=xp-k.spentPts;
+  const lvl=getLvl(xp);const nxt=nxtXP(xp);const prv=prvXP(xp);
+  const pct=Math.min(100,Math.round((xp-prv)/Math.max(1,nxt-prv)*100));
+  const done=k.tasks.filter(q=>q.done).length;const streak=k.streak.filter(Boolean).length;
+  const earnedToday=k.tasks.reduce((a,q)=>a+(q.done?DIFF[q.diff].pts:0),0);
+  let h=`<div class="hero-card" style="background:${t.cg}">
+    <div class="hc-deco">${k.emoji}</div><div class="hc-deco2">⭐</div><div class="hc-deco3">✦</div>
+    <div class="hc-top">
+      <div class="hc-av"><span style="font-size:30px">${k.emoji}</span><div class="hc-lvl">Lv.${lvl+1}</div></div>
+      <div><div class="hc-name">${k.name}</div><div class="hc-level">✦ ${LEVELS[lvl]}</div></div>
+      <div style="text-align:right;margin-left:auto">
+        <div class="hc-pts" style="color:${t.acc}">${pts}</div>
+        <div class="hc-ptslbl">points</div>
+      </div>
+    </div>
+    <div class="xp-track"><div class="xp-fill" style="width:${pct}%;background:${t.acc}"></div></div>
+    <div class="xp-row"><span>Level ${lvl+1}</span><span>${lvl<6?xp+' / '+nxt+' XP':'✦ MAX LEVEL!'}</span></div>
+    <div class="stats-grid">
+      <div class="stat-pill"><div class="stat-num">${done}/${k.tasks.length}</div><div class="stat-lbl">done</div></div>
+      <div class="stat-pill"><div class="stat-num">+${earnedToday}</div><div class="stat-lbl">today</div></div>
+      <div class="stat-pill"><div class="stat-num">${streak}</div><div class="stat-lbl">streak</div></div>
+      <div class="stat-pill"><div class="stat-num">${xp}</div><div class="stat-lbl">total XP</div></div>
+    </div>
+  </div>`;
+
+  h+=`<div class="card-wrap"><div class="sec-hd"><div class="sec-title">🔥 This week's streak</div></div><div class="streak-days">`;
+  k.streak.forEach((d,i)=>{
+    h+=`<div class="sday" style="background:${d?t.bg:'#F8FAFC'}">
+      <div class="sday-icon">${d?'🔥':'·'}</div>
+      <div class="sday-lbl" style="color:${d?t.bar:'#94A3B8'}">${DAYS[i]}</div>
+    </div>`;
+  });
+  h+=`</div></div>`;
+
+  h+=`<div class="tasks-hd">
+    <div class="sec-title" style="font-size:15px">⚔️ Today's quests</div>
+    <div style="display:flex;gap:6px">
+      <button class="nk-ghost-btn" onclick="resetDay()">🌅 New day</button>
+      <button class="nk-add-btn" onclick="guardedAddTask()">+ Quest</button>
+    </div>
+  </div>
+  <div class="task-list">`;
+  k.tasks.forEach(q=>{
+    const ci=CAT[q.cat]||CAT.education;const di=DIFF[q.diff]||DIFF.normal;
+    h+=`<div class="tcard${q.done?' done':''}" onclick="toggleTask(${q.id})">
+      <div class="check-ring${q.done?' done':''}">${q.done?'<span style="font-size:14px;color:#fff;font-weight:900">✓</span>':''}</div>
+      <div class="tcat-ico" style="background:${ci.bg}">${ci.emoji}</div>
+      <div class="tc-body">
+        <div class="tcname">${q.name}</div>
+        <div class="tc-meta">
+          <span class="diff-s">${di.stars}</span>
+          ${q.streak>0?`<span class="stk-tag">🔥 ${q.streak} days</span>`:''}
+        </div>
+      </div>
+      <div class="tc-pts" style="color:${q.done?'#94A3B8':t.bar}">+${di.pts}</div>
+    </div>`;
+  });
+  h+=`</div>`;
+  if(k.tasks.length>0&&k.tasks.every(q=>q.done)){
+    h+=`<div class="all-done-card"><div class="adc-deco">🌟</div>
+      <span class="adc-icon">🏆</span>
+      <div class="adc-title">All quests complete, ${k.name}!</div>
+      <div class="adc-sub">You're a true champion today!</div>
+      <div class="adc-badge">+20 bonus XP earned!</div>
+    </div>`;
+  }
+  document.getElementById('mainContent').innerHTML=h;
+}
+
+function renderBonus(k){
+  if(!k)return;
+  const t=TH[k.color]||TH.blue;
+  let h=`<div class="bonus-intro" style="background:${t.cg}">
+    <span style="font-size:34px">✨</span>
+    <div><div style="font-size:16px;font-weight:900;color:#fff">Bonus quests</div><div style="font-size:12px;color:rgba(255,255,255,0.8);margin-top:2px;font-weight:700">Extra challenges for extra glory!</div></div>
+  </div>
+  <div class="bonus-grid">`;
+  BONUSES.forEach(b=>{
+    const done=k.bonusDone.includes(b.id);
+    h+=`<div class="bcard${done?' done':''}" onclick="toggleBonus('${b.id}',${b.pts})">
+      <span class="bcard-icon">${b.icon}</span>
+      <div class="bcard-name">${b.name}</div>
+      <div class="bcard-desc">${b.desc}</div>
+      <div class="bcard-pts" style="color:${done?'#94A3B8':t.bar}">${done?'✓ Done!':'+'+b.pts+' pts'}</div>
+    </div>`;
+  });
+  h+=`</div>
+  <div class="card-wrap">
+    <div class="sec-hd"><div class="sec-title">📊 Weekly XP history</div></div>
+    <div class="bar-chart">`;
+  const mx=Math.max(1,...k.weeklyXp);
+  k.weeklyXp.forEach((v,i)=>{
+    const ht=Math.max(4,Math.round(v/mx*72));
+    h+=`<div class="bar-col"><div class="bar-fill" style="height:${ht}px;background:${v>0?t.bar:'#E2E8F0'}"></div><div class="bar-day-lbl">${DAYS[i]}</div></div>`;
+  });
+  h+=`</div></div>`;
+  document.getElementById('mainContent').innerHTML=h;
+}
+
+function renderRewards(k){
+  if(!k)return;
+  const t=TH[k.color]||TH.blue;const pts=k.totalXp-k.spentPts;
+  const needsPin=S.parentPin&&!S.parentUnlocked;
+  let h=`<div class="wallet-banner" style="background:${t.cg}">
+    <div style="display:flex;align-items:center;gap:12px">
+      <div class="wb-icon">${k.emoji}</div>
+      <div><div class="wb-name" style="color:#fff">${k.name}'s wallet</div><div class="wb-sub" style="color:rgba(255,255,255,0.8)">Spend your hard-earned points!</div></div>
+    </div>
+    <div><div class="wb-pts" style="color:${t.acc}">${pts}</div><div class="wb-ptslbl" style="color:rgba(255,255,255,0.72)">pts available</div></div>
+  </div>
+  <div class="rewards-grid">`;
+  REWARDS.forEach(r=>{
+    const can=pts>=r.cost;
+    h+=`<div class="rcard">
+      <span class="rcard-icon">${r.icon}</span>
+      <div class="rcard-name">${r.name}</div>
+      <div class="rcard-cost">${r.cost} pts needed</div>
+      <button class="rcard-btn${can?' can':''}" ${can?'':'disabled'} onclick="initiateRedeem(${r.cost},'${r.name.replace(/'/g,"\\'")}','${k.name}')">
+        ${can?(needsPin?'🔐 Request!':'🎉 Redeem!'):'Need more pts'}
+      </button>
+    </div>`;
+  });
+  h+=`</div>`;
+  document.getElementById('mainContent').innerHTML=h;
+}
+
+function renderScores(){
+  const sorted=[...S.kids].sort((a,b)=>(b.totalXp-b.spentPts)-(a.totalXp-a.spentPts));
+  const mx=Math.max(1,...sorted.map(k=>k.totalXp-k.spentPts));
+  const medals=['🥇','🥈','🥉','4️⃣','5️⃣'];
+  let h=`<div class="lb-card">`;
+  sorted.forEach((k,i)=>{
+    const t=TH[k.color]||TH.blue;const pts=k.totalXp-k.spentPts;const pct=Math.round(pts/mx*100);
+    const lvl=getLvl(k.totalXp);const s=k.streak.filter(Boolean).length;
+    h+=`<div class="lb-row${i===0?' gold':''}">
+      <div class="lb-rank">${medals[i]||i+1}</div>
+      <div class="lb-av" style="background:${t.bg}">${k.emoji}</div>
+      <div class="lb-info">
+        <div class="lb-name">${k.name} <span style="font-size:11px;color:${t.bar};font-weight:800">· ${LEVELS[lvl]}</span></div>
+        <div class="lb-meta"><span>🔥 ${s} streak</span><span>Lv.${lvl+1}</span></div>
+        <div class="lb-bar-bg"><div class="lb-bar-fill" style="width:${pct}%;background:${t.bar}"></div></div>
+      </div>
+      <div class="lb-score" style="color:${t.bar}">${pts}</div>
+    </div>`;
+  });
+  h+=`</div>`;
+  document.getElementById('mainContent').innerHTML=h;
+}
+
+function renderParent(){
+  const today=new Date().toLocaleDateString('en-GB',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
+  let h=`<div class="parent-panel">
+    <div class="pp-banner">
+      <div class="pp-banner-deco">🛡️</div>
+      <div class="pp-title">Parent dashboard</div>
+      <div class="pp-sub">${today}</div>
+      ${S.parentUnlocked?`<div style="margin-top:10px"><button class="nk-ghost-btn" style="background:rgba(255,255,255,0.15);border-color:rgba(255,255,255,0.4);color:#fff;font-size:12px" onclick="lockParent()">🔒 Lock parent mode</button></div>`:''}
+    </div>`;
+
+  h+=`<div class="pp-grid">
+    <div class="pp-card"><div class="pp-card-title">📊 Today's progress</div>`;
+  S.kids.forEach(k=>{
+    const t=TH[k.color]||TH.blue;const done=k.tasks.filter(q=>q.done).length;
+    const pct=k.tasks.length?Math.round(done/k.tasks.length*100):0;
+    h+=`<div class="pp-kid-row"><div class="pp-kid-name">${k.emoji} ${k.name}</div><div style="font-weight:800;color:${t.bar}">${pct}% · ${done}/${k.tasks.length}</div></div>`;
+  });
+  h+=`</div><div class="pp-card"><div class="pp-card-title">🏆 Points wallet</div>`;
+  S.kids.forEach(k=>{
+    const t=TH[k.color]||TH.blue;const pts=k.totalXp-k.spentPts;const lvl=getLvl(k.totalXp);
+    h+=`<div class="pp-kid-row"><div class="pp-kid-name">${k.emoji} ${k.name} <span style="font-size:10px;color:${t.bar};font-weight:800">Lv.${lvl+1}</span></div><div style="font-weight:800;color:${t.bar}">${pts} pts</div></div>`;
+  });
+  h+=`</div></div>`;
+
+  h+=`<div style="font-size:14px;font-weight:800;color:var(--nt);margin-bottom:10px;padding:0 2px">⚡ Quick actions</div>
+  <div class="pp-actions">
+    <div class="pp-action-btn" onclick="printReport()"><div class="pp-action-icon">🖨️</div><div class="pp-action-name">Print report</div><div class="pp-action-desc">Weekly progress PDF</div></div>
+    <div class="pp-action-btn" onclick="openModal('setPinModal')"><div class="pp-action-icon">${S.parentPin?'🔑':'🔐'}</div><div class="pp-action-name">${S.parentPin?'Change PIN':'Set PIN'}</div><div class="pp-action-desc">${S.parentPin?'Update parent PIN':'Protect parent mode'}</div></div>
+    <div class="pp-action-btn" onclick="openModal('kidModal')"><div class="pp-action-icon">🦸</div><div class="pp-action-name">Add hero</div><div class="pp-action-desc">New kid profile</div></div>
+    <div class="pp-action-btn" onclick="resetAllDay()"><div class="pp-action-icon">🌅</div><div class="pp-action-name">New day for all</div><div class="pp-action-desc">Reset all heroes</div></div>
+  </div>`;
+
+  h+=`<div class="pin-section">
+    <div class="sec-title" style="margin-bottom:10px">🔐 PIN — ${S.parentPin?'<span style="color:#22C55E;font-size:13px">Active ✓</span>':'<span style="color:#F59E0B;font-size:13px">Not set</span>'}</div>
+    <p style="font-size:13px;color:var(--nm);font-weight:700;line-height:1.5;margin-bottom:10px">${S.parentPin?'PIN is active. Reward redemptions require your approval.':'Set a PIN so kids cannot access parent settings or self-approve rewards.'}</p>
+    <div style="display:flex;gap:8px;flex-wrap:wrap">
+      <button class="nk-blue-btn" onclick="openModal('setPinModal')" style="font-size:13px">${S.parentPin?'🔑 Change PIN':'🔐 Set parent PIN'}</button>
+      ${S.parentPin?`<button class="nk-ghost-btn" onclick="removePin()" style="color:#E24B4A;border-color:#FECACA">Remove PIN</button>`:''}
+    </div>
+  </div>`;
+
+  h+=`<div style="font-size:14px;font-weight:800;color:var(--nt);margin-bottom:10px;padding:0 2px">🦸 Hero roster</div>`;
+  S.kids.forEach((k,ki)=>{
+    const t=TH[k.color]||TH.blue;const lvl=getLvl(k.totalXp);
+    h+=`<div class="card-wrap" style="margin-bottom:12px">
+      <div style="display:flex;align-items:center;gap:12px;margin-bottom:12px">
+        <div style="width:46px;height:46px;border-radius:50%;background:${t.bg};display:flex;align-items:center;justify-content:center;font-size:24px;border:2px solid ${t.bg}">${k.emoji}</div>
+        <div style="flex:1">
+          <div style="font-size:16px;font-weight:900;color:var(--nt)">${k.name}</div>
+          <div style="font-size:12px;color:${t.bar};font-weight:800">${LEVELS[lvl]} · ${k.totalXp} XP · ${k.totalXp-k.spentPts} pts</div>
+        </div>
+        <button class="nk-ghost-btn" style="font-size:11px;color:#E24B4A;border-color:#FECACA" onclick="removeKid(${ki})">Remove</button>
+      </div>
+      <div style="font-size:11px;font-weight:800;color:var(--nm);margin-bottom:8px;text-transform:uppercase;letter-spacing:.5px">Quests (${k.tasks.length})</div>`;
+    k.tasks.forEach((q,qi)=>{
+      const ci=CAT[q.cat]||CAT.education;const di=DIFF[q.diff]||DIFF.normal;
+      h+=`<div class="roster-task">
+        <span>${ci.emoji}</span>
+        <span style="flex:1;font-weight:800;color:var(--nt)">${q.name}</span>
+        <span style="font-size:11px;color:var(--nm)">${di.stars}</span>
+        <span style="font-size:12px;font-weight:800;color:${t.bar}">+${di.pts}</span>
+        <span class="roster-task-del" onclick="removeTask(${ki},${qi})">✕</span>
+      </div>`;
+    });
+    h+=`</div>`;
+  });
+  h+=`</div>`;
+  document.getElementById('mainContent').innerHTML=h;
+}
+
+function guardedAddTask(){
+  if(S.parentPin&&!S.parentUnlocked){showToast('🔒 Unlock parent mode to add quests!');return;}
+  openModal('taskModal');
+}
+
+function initiateRedeem(cost,name,kidName){
+  if(S.parentPin&&!S.parentUnlocked){
+    pendingReward={cost,name};
+    document.getElementById('approvalText').textContent=`${kidName} wants to redeem "${name}" for ${cost} pts.`;
+    pinEntry='';
+    renderPinPad('approvalDots','approvalPad','approvalStatus','reward');
+    openModal('rewardApprovalModal');
+  }else{doRedeem(cost,name);}
+}
+
+function doRedeem(cost,name){
+  const k=S.kids[S.activeKid];if(!k||k.totalXp-k.spentPts<cost)return;
+  k.spentPts+=cost;showToast('🎁 Redeemed: '+name+'!');save();render();
+}
+
+function showPinGate(mode){
+  pinEntry='';
+  const ov=document.createElement('div');ov.id='pinGateOv';
+  ov.innerHTML=`<div class="modal" style="width:300px;margin-top:0">
+    <div class="modal-title">🔐 Parent PIN required</div>
+    <p style="font-size:13px;color:var(--nm);font-weight:700;margin-bottom:12px;line-height:1.5">Enter your 4-digit PIN to continue.</p>
+    <div class="pin-dots" id="gateDots"></div>
+    <div class="pin-pad" id="gatePad"></div>
+    <div class="pin-status" id="gateStatus"></div>
+    <div style="text-align:center;margin-top:12px"><button class="btn-cancel" onclick="document.getElementById('pinGateOv').remove()">Cancel</button></div>
+  </div>`;
+  document.body.appendChild(ov);
+  renderPinPad('gateDots','gatePad','gateStatus','gate');
+}
+
+function renderPinPad(dotsId,padId,statusId,ctx){
+  const keys=['1','2','3','4','5','6','7','8','9','','0','⌫'];
+  document.getElementById(dotsId).innerHTML=Array(4).fill(0).map((_,i)=>`<div class="pin-dot" id="${dotsId}d${i}"></div>`).join('');
+  document.getElementById(padId).innerHTML=keys.map(k=>{
+    if(k==='')return`<div></div>`;
+    return`<button class="pin-key${k==='⌫'?' del':''}" onclick="pinPress('${k}','${dotsId}','${padId}','${statusId}','${ctx}')">${k}</button>`;
+  }).join('');
+}
+
+function pinPress(key,dotsId,padId,statusId,ctx){
+  if(key==='⌫'){pinEntry=pinEntry.slice(0,-1);}
+  else if(pinEntry.length<4){pinEntry+=key;}
+  for(let i=0;i<4;i++){const d=document.getElementById(dotsId+'d'+i);if(d)d.className='pin-dot'+(i<pinEntry.length?' filled':'');}
+  if(pinEntry.length===4){
+    setTimeout(()=>{
+      if(pinEntry===S.parentPin){
+        document.getElementById(statusId).textContent='';
+        if(ctx==='gate'){S.parentUnlocked=true;document.getElementById('pinGateOv')?.remove();setViewDirect('parent');}
+        else if(ctx==='reward'){closeModal('rewardApprovalModal');if(pendingReward){doRedeem(pendingReward.cost,pendingReward.name);pendingReward=null;}}
+        pinEntry='';
+      }else{
+        const st=document.getElementById(statusId);if(st){st.textContent='❌ Wrong PIN, try again!';st.style.color='#E24B4A';}
+        pinEntry='';
+        for(let i=0;i<4;i++){const d=document.getElementById(dotsId+'d'+i);if(d)d.className='pin-dot';}
+      }
+    },250);
+  }
+}
+
+function savePin(){
+  const p1=document.getElementById('newPin').value;
+  const p2=document.getElementById('confirmPin').value;
+  const err=document.getElementById('setPinError');
+  if(!/^\d{4}$/.test(p1)){err.textContent='PIN must be exactly 4 digits.';return;}
+  if(p1!==p2){err.textContent='PINs do not match.';return;}
+  S.parentPin=p1;S.parentUnlocked=true;
+  document.getElementById('newPin').value='';document.getElementById('confirmPin').value='';err.textContent='';
+  closeModal('setPinModal');showToast('🔐 PIN set successfully!');save();render();
+}
+
+function removePin(){
+  if(!confirm('Remove parent PIN? Anyone will be able to access parent settings.'))return;
+  S.parentPin=null;S.parentUnlocked=false;save();render();showToast('PIN removed.');
+}
+function lockParent(){S.parentUnlocked=false;setView('tasks');showToast('🔒 Parent mode locked.');}
+
+function resetDay(){
+  const k=S.kids[S.activeKid];if(!k)return;
+  k.tasks.forEach(q=>{q.streak=q.done?(q.streak||0)+1:0;q.done=false;});
+  k.bonusDone=[];k.streak.push(true);k.streak.shift();k.weeklyXp.push(0);k.weeklyXp.shift();
+  showToast('🌅 New day started!');save();render();
+}
+function resetAllDay(){
+  S.kids.forEach(k=>{
+    k.tasks.forEach(q=>{q.streak=q.done?(q.streak||0)+1:0;q.done=false;});
+    k.bonusDone=[];k.streak.push(true);k.streak.shift();k.weeklyXp.push(0);k.weeklyXp.shift();
+  });
+  showToast('🌅 New day for all heroes!');save();render();
+}
+
+function removeKid(i){
+  if(!confirm('Remove this hero? All their data will be lost.'))return;
+  S.kids.splice(i,1);
+  if(S.activeKid>=S.kids.length)S.activeKid=Math.max(0,S.kids.length-1);
+  save();render();
+}
+function removeTask(ki,qi){S.kids[ki].tasks.splice(qi,1);save();render();}
+
+function addKid(){
+  const name=document.getElementById('kidName').value.trim();if(!name)return;
+  const emoji=document.getElementById('kidEmoji').value;
+  const color=document.getElementById('kidColor').value;
+  S.kids.push({id:S.nextKidId++,name,emoji,color,totalXp:0,spentPts:0,
+    tasks:[{id:S.nextTaskId++,name:'Daily homework',cat:'education',diff:'hard',done:false,streak:0},{id:S.nextTaskId++,name:'Brush teeth ×2',cat:'health',diff:'easy',done:false,streak:0}],
+    bonusDone:[],streak:[false,false,false,false,false,false,false],weeklyXp:[0,0,0,0,0,0,0]});
+  S.activeKid=S.kids.length-1;
+  document.getElementById('kidName').value='';
+  closeModal('kidModal');save();render();
+}
+
+function addTask(){
+  const name=document.getElementById('taskName').value.trim();if(!name)return;
+  const cat=document.getElementById('taskCat').value;
+  const diff=document.getElementById('taskDiff').value;
+  const k=S.kids[S.activeKid];if(!k)return;
+  k.tasks.push({id:S.nextTaskId++,name,cat,diff,done:false,streak:0});
+  document.getElementById('taskName').value='';
+  closeModal('taskModal');save();render();
+}
+
+function toggleTask(id){
+  const k=S.kids[S.activeKid];if(!k)return;
+  const q=k.tasks.find(q=>q.id===id);if(!q)return;
+  const prevLvl=getLvl(k.totalXp);const pts=DIFF[q.diff]?.pts||10;
+  q.done=!q.done;
+  if(q.done){
+    k.totalXp+=pts;k.weeklyXp[6]=(k.weeklyXp[6]||0)+pts;
+    if(k.tasks.every(q=>q.done)){k.totalXp+=20;k.weeklyXp[6]+=20;showToast('🏆 ALL DONE! +20 bonus XP!');}
+    else showToast(DIFF[q.diff].stars+' +'+pts+' pts!');
+    confetti(TH[k.color]?.bar||'#1A6EFF');
+    const nl=getLvl(k.totalXp);if(nl>prevLvl)setTimeout(()=>showLvlUp(k.name,nl),700);
+  }else{k.totalXp=Math.max(0,k.totalXp-pts);}
+  save();render();
+}
+
+function toggleBonus(id,pts){
+  const k=S.kids[S.activeKid];if(!k)return;
+  const prevLvl=getLvl(k.totalXp);
+  if(k.bonusDone.includes(id)){
+    k.bonusDone=k.bonusDone.filter(x=>x!==id);k.totalXp=Math.max(0,k.totalXp-pts);
+  }else{
+    k.bonusDone.push(id);k.totalXp+=pts;k.weeklyXp[6]=(k.weeklyXp[6]||0)+pts;
+    showToast('✨ Bonus +'+pts+' pts!');confetti('#7B4FD8');
+    const nl=getLvl(k.totalXp);if(nl>prevLvl)setTimeout(()=>showLvlUp(k.name,nl),700);
+  }
+  save();render();
+}
+
+function printReport(){
+  const today=new Date().toLocaleDateString('en-GB',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
+  let html=`<div class="pr-header">
+    <div class="pr-logo">⭐ Mighty Sprouts</div>
+    <div class="pr-title">Weekly Progress Report</div>
+    <div class="pr-date">${today}</div>
+  </div>`;
+  S.kids.forEach(k=>{
+    const t=TH[k.color]||TH.blue;const lvl=getLvl(k.totalXp);
+    const done=k.tasks.filter(q=>q.done).length;const streak=k.streak.filter(Boolean).length;
+    const totalWeekXp=k.weeklyXp.reduce((a,v)=>a+v,0);const pts=k.totalXp-k.spentPts;
+    html+=`<div class="pr-kid-section">
+      <div class="pr-kid-header" style="background:${t.card}">
+        <div class="pr-kid-emoji">${k.emoji}</div>
+        <div><div class="pr-kid-name">${k.name}</div><div class="pr-kid-level">${LEVELS[lvl]} · Level ${lvl+1}</div></div>
+      </div>
+      <div class="pr-stats-row">
+        <div class="pr-stat"><div class="pr-stat-num">${k.totalXp}</div><div class="pr-stat-lbl">Total XP</div></div>
+        <div class="pr-stat"><div class="pr-stat-num">${pts}</div><div class="pr-stat-lbl">Pts available</div></div>
+        <div class="pr-stat"><div class="pr-stat-num">${totalWeekXp}</div><div class="pr-stat-lbl">This week</div></div>
+        <div class="pr-stat"><div class="pr-stat-num">${streak}/7</div><div class="pr-stat-lbl">Day streak</div></div>
+        <div class="pr-stat"><div class="pr-stat-num">${done}/${k.tasks.length}</div><div class="pr-stat-lbl">Done today</div></div>
+      </div>
+      <div class="pr-tasks-title">Today's quests</div>`;
+    k.tasks.forEach(q=>{
+      const ci=CAT[q.cat]||CAT.education;const di=DIFF[q.diff]||DIFF.normal;
+      html+=`<div class="pr-task-row">
+        <div class="pr-check${q.done?' done':''}">${q.done?'✓':''}</div>
+        <span class="pr-task-name">${ci.emoji} ${q.name} ${di.stars}</span>
+        <span class="pr-task-pts">+${di.pts} pts${q.done?' ✓':''}</span>
+      </div>`;
+    });
+    html+=`<div class="pr-streak-row">🔥 Weekly streak: ${DAYS.map((d,i)=>k.streak[i]?'<b>✓'+d+'</b>':'·'+d).join('  ')}</div>`;
+    html+=`<div class="pr-notes">Bonus quests completed: ${k.bonusDone.length} &nbsp;|&nbsp; Total XP spent on rewards: ${k.spentPts}</div>`;
+    html+=`</div>`;
+  });
+  html+=`<div class="pr-footer">Generated by Mighty Sprouts · ${today} · Keep growing, Mighty Sprout! 🌱</div>`;
+  document.getElementById('printArea').innerHTML=html;
+  document.getElementById('printArea').style.display='block';
+  setTimeout(()=>{window.print();setTimeout(()=>{document.getElementById('printArea').style.display='none';},500);},150);
+}
+
+function openModal(id){document.getElementById(id).classList.add('open');}
+function closeModal(id){document.getElementById(id).classList.remove('open');}
+
+function showToast(msg){
+  const el=document.getElementById('toast');
+  el.textContent=msg;el.classList.add('show');
+  clearTimeout(el._t);el._t=setTimeout(()=>el.classList.remove('show'),2300);
+}
+
+function showLvlUp(name,lvl){
+  document.getElementById('lvlup-title').textContent='Level up, '+name+'!';
+  document.getElementById('lvlup-sub').textContent='You\'re now a '+LEVELS[lvl]+'!';
+  const el=document.getElementById('lvlup');el.classList.add('show');el.style.pointerEvents='auto';
+  setTimeout(()=>{el.classList.remove('show');el.style.pointerEvents='none';},2800);
+}
+
+function confetti(color){
+  const colors=[color,'#FFD600','#7B4FD8','#FF6B4A','#22C55E','#EC4899'];
+  const wrap=document.createElement('div');
+  wrap.style.cssText='position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:200;overflow:hidden';
+  for(let i=0;i<28;i++){
+    const p=document.createElement('div');const sz=Math.random()*10+5;const isCircle=Math.random()>0.5;
+    p.style.cssText=`position:absolute;width:${sz}px;height:${sz}px;background:${colors[i%colors.length]};border-radius:${isCircle?'50%':'4px'};left:${3+Math.random()*94}%;top:-14px;transition:top ${1+Math.random()*.8}s cubic-bezier(.17,.67,.83,.67),opacity .4s ease ${.8+Math.random()*.6}s`;
+    wrap.appendChild(p);
+    requestAnimationFrame(()=>requestAnimationFrame(()=>{p.style.top=(40+Math.random()*55)+'vh';p.style.opacity='0';}));
+  }
+  document.body.appendChild(wrap);setTimeout(()=>wrap.remove(),2500);
+}
+
+[document.getElementById('kidModal'),document.getElementById('taskModal'),document.getElementById('setPinModal'),document.getElementById('rewardApprovalModal')].forEach(m=>{
+  m.addEventListener('click',e=>{if(e.target===m)m.classList.remove('open');});
+});
+
+render();
+</script>
+</body>
+</html>
