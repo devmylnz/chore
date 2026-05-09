@@ -2,8 +2,29 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"/>
 <title>Mighty Sprouts — Daily Hero Challenges</title>
+
+<!-- PWA & iOS home screen -->
+<meta name="application-name" content="Mighty Sprouts"/>
+<meta name="apple-mobile-web-app-capable" content="yes"/>
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+<meta name="apple-mobile-web-app-title" content="Mighty Sprouts"/>
+<meta name="mobile-web-app-capable" content="yes"/>
+<meta name="theme-color" content="#1A6EFF"/>
+<meta name="description" content="Grow strong, level up! Daily hero challenges for kids."/>
+
+<!-- Open Graph -->
+<meta property="og:title" content="Mighty Sprouts"/>
+<meta property="og:description" content="Grow strong, level up! Daily hero challenges for kids."/>
+<meta property="og:type" content="website"/>
+
+<!-- Web App Manifest -->
+<link rel="manifest" href="data:application/json;charset=utf-8,%7B%22name%22%3A%22Mighty%20Sprouts%22%2C%22short_name%22%3A%22Sprouts%22%2C%22description%22%3A%22Grow%20strong%2C%20level%20up!%20Daily%20hero%20challenges%20for%20kids.%22%2C%22start_url%22%3A%22.%2F%22%2C%22display%22%3A%22standalone%22%2C%22background_color%22%3A%22%23F5F7FF%22%2C%22theme_color%22%3A%22%231A6EFF%22%2C%22orientation%22%3A%22portrait%22%2C%22icons%22%3A%5B%7B%22src%22%3A%22data%3Aimage%2Fsvg%2Bxml%2C%253Csvg%2520xmlns%3D%2527http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%2527%2520viewBox%3D%270%25200%2520100%2520100%2527%253E%253Crect%2520width%3D%2527100%2527%2520height%3D%2527100%2527%2520rx%3D%252720%2527%2520fill%3D%2527%25231A6EFF%2527%2F%253E%253Ctext%2520y%3D%252780%2527%2520x%3D%252710%2527%2520font-size%3D%252780%2527%253E%25F0%259F%258C%25B1%253C%2Ftext%253E%253C%2Fsvg%253E%22%2C%22sizes%22%3A%22any%22%2C%22type%22%3A%22image%2Fsvg%2Bxml%22%7D%5D%7D"/>
+
+<!-- iOS splash / icon fallback (inline SVG as data URI) -->
+<link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='22' fill='%231A6EFF'/><text y='82' x='8' font-size='78'>🌱</text></svg>"/>
+
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
 <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet"/>
@@ -24,7 +45,37 @@
   --shadow-lg:0 8px 32px rgba(26,110,255,0.16);
 }
 html{scroll-behavior:smooth}
-body{font-family:'Nunito',sans-serif;background:var(--nbg);min-height:100vh;color:var(--nt)}
+body{font-family:'Nunito',sans-serif;background:var(--nbg);min-height:100vh;color:var(--nt);padding-bottom:env(safe-area-inset-bottom)}
+
+/* ── PWA Install Banner ── */
+.install-banner{display:none;position:fixed;bottom:0;left:0;right:0;z-index:600;background:linear-gradient(135deg,#1A6EFF,#1255CC);padding:14px 20px calc(14px + env(safe-area-inset-bottom)) 20px;box-shadow:0 -4px 24px rgba(26,110,255,0.3);animation:slideUpBanner .3s ease}
+.install-banner.visible{display:flex;align-items:center;gap:12px}
+@keyframes slideUpBanner{from{transform:translateY(100%)}to{transform:translateY(0)}}
+.ib-icon{width:44px;height:44px;background:var(--ny);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:24px;flex-shrink:0;box-shadow:0 2px 8px rgba(0,0,0,0.15)}
+.ib-text{flex:1}
+.ib-title{font-size:14px;font-weight:800;color:#fff}
+.ib-sub{font-size:11px;color:rgba(255,255,255,0.75);margin-top:2px;font-weight:600}
+.ib-actions{display:flex;gap:8px;flex-shrink:0}
+.ib-install{padding:8px 16px;border-radius:50px;background:var(--ny);color:var(--nyt);border:none;font-size:13px;font-weight:800;cursor:pointer;font-family:'Nunito',sans-serif}
+.ib-dismiss{padding:8px 12px;border-radius:50px;background:rgba(255,255,255,0.15);color:#fff;border:2px solid rgba(255,255,255,0.3);font-size:13px;font-weight:700;cursor:pointer;font-family:'Nunito',sans-serif}
+/* iOS instructions overlay */
+.ios-inst{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.72);z-index:700;align-items:flex-end;justify-content:center;backdrop-filter:blur(5px)}
+.ios-inst.visible{display:flex;animation:fadeIn .2s ease}
+.ios-card{background:var(--nw);border-radius:24px 24px 0 0;padding:1.5rem 1.5rem calc(1.5rem + env(safe-area-inset-bottom));width:100%;max-width:520px;box-shadow:0 -8px 40px rgba(0,0,0,0.2)}
+.ios-title{font-size:18px;font-weight:900;color:var(--nt);margin-bottom:4px}
+.ios-sub{font-size:13px;color:var(--nm);font-weight:600;margin-bottom:1.25rem;line-height:1.5}
+.ios-steps{display:flex;flex-direction:column;gap:10px;margin-bottom:1.25rem}
+.ios-step{display:flex;align-items:center;gap:12px;padding:11px 14px;background:var(--nbl);border-radius:12px;border:1.5px solid rgba(26,110,255,0.12)}
+.ios-step-num{width:28px;height:28px;border-radius:50%;background:var(--nb);color:#fff;font-size:13px;font-weight:900;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.ios-step-txt{font-size:13px;font-weight:700;color:var(--nt);line-height:1.4}
+.ios-step-txt b{color:var(--nb)}
+.ios-close{width:100%;padding:13px;border-radius:50px;background:var(--nb);color:#fff;border:none;font-size:15px;font-weight:800;cursor:pointer;font-family:'Nunito',sans-serif;box-shadow:0 2px 12px rgba(26,110,255,0.3)}
+/* standalone mode */
+@media all and (display-mode:standalone){
+  .nk-hdr{padding-top:calc(16px + env(safe-area-inset-top));border-radius:0}
+  .install-banner{display:none!important}
+  .app{padding-bottom:calc(3rem + env(safe-area-inset-bottom))}
+}
 
 /* ── Layout ── */
 .app{max-width:680px;margin:0 auto;padding:0 0 3rem}
@@ -961,6 +1012,94 @@ function confetti(color){
 });
 
 render();
+
+// ── PWA: Service Worker (inline blob) ──
+if('serviceWorker' in navigator){
+  const swCode=[
+    "self.addEventListener('install',e=>{e.waitUntil(caches.open('ms-v1').then(c=>c.addAll(['./'])));});",
+    "self.addEventListener('fetch',e=>{e.respondWith(caches.match(e.request).then(r=>r||fetch(e.request).catch(()=>caches.match('./'))));});",
+    "self.addEventListener('activate',e=>{e.waitUntil(caches.keys().then(keys=>Promise.all(keys.filter(k=>k!=='ms-v1').map(k=>caches.delete(k)))));});"
+  ].join('\n');
+  try{
+    const blob=new Blob([swCode],{type:'application/javascript'});
+    navigator.serviceWorker.register(URL.createObjectURL(blob)).catch(()=>{});
+  }catch(e){}
+}
+
+// ── PWA: Install banner & iOS hint ──
+(function(){
+  var deferredPrompt=null;
+  var banner=document.getElementById('installBanner');
+  var iosOverlay=document.getElementById('iosInst');
+  var isIOS=/iPad|iPhone|iPod/.test(navigator.userAgent)&&!window.MSStream;
+  var isStandalone=(window.matchMedia&&window.matchMedia('(display-mode:standalone)').matches)||!!window.navigator.standalone;
+  var wasDismissed=sessionStorage.getItem('msDismissed');
+
+  window.installPWA=function(){
+    if(deferredPrompt){deferredPrompt.prompt();deferredPrompt.userChoice.then(function(){deferredPrompt=null;if(banner)banner.classList.remove('visible');});}
+  };
+  window.dismissBanner=function(){if(banner)banner.classList.remove('visible');sessionStorage.setItem('msDismissed','1');};
+  window.closeIosInst=function(e){if(!e||e.target===iosOverlay){if(iosOverlay)iosOverlay.classList.remove('visible');}};
+
+  window.addEventListener('beforeinstallprompt',function(e){
+    e.preventDefault();deferredPrompt=e;
+    if(!isStandalone&&!wasDismissed&&banner)banner.classList.add('visible');
+  });
+  window.addEventListener('appinstalled',function(){
+    if(banner)banner.classList.remove('visible');deferredPrompt=null;
+    showToast('🌱 Mighty Sprouts installed!');
+  });
+
+  // iOS: add hint button after short delay
+  if(isIOS&&!isStandalone&&!wasDismissed){
+    setTimeout(function(){
+      var navPills=document.getElementById('navPills');
+      if(!navPills)return;
+      var hint=document.createElement('button');
+      hint.textContent='📲 Add to iPad';
+      hint.style.cssText='padding:6px 12px;border-radius:50px;background:rgba(255,255,255,0.18);border:2px solid rgba(255,255,255,0.35);color:#fff;font-size:12px;font-weight:800;cursor:pointer;font-family:Nunito,sans-serif;white-space:nowrap';
+      hint.onclick=function(){if(iosOverlay)iosOverlay.classList.add('visible');};
+      navPills.appendChild(hint);
+    },1500);
+  }
+})();
 </script>
+<!-- Install Banner (Android/Desktop) -->
+<div class="install-banner" id="installBanner">
+  <div class="ib-icon">🌱</div>
+  <div class="ib-text">
+    <div class="ib-title">Add Mighty Sprouts to your home screen!</div>
+    <div class="ib-sub">Works offline · No app store needed</div>
+  </div>
+  <div class="ib-actions">
+    <button class="ib-install" onclick="installPWA()">Install</button>
+    <button class="ib-dismiss" onclick="dismissBanner()">✕</button>
+  </div>
+</div>
+
+<!-- iOS Instructions Overlay -->
+<div class="ios-inst" id="iosInst" onclick="closeIosInst(event)">
+  <div class="ios-card">
+    <div class="ios-title">🌱 Add to Home Screen</div>
+    <div class="ios-sub">Install Mighty Sprouts for the best experience — works offline and feels like a real app!</div>
+    <div class="ios-steps">
+      <div class="ios-step">
+        <div class="ios-step-num">1</div>
+        <div class="ios-step-txt">Tap the <b>Share button</b> <span style="font-size:16px">⬆️</span> at the bottom of your browser</div>
+      </div>
+      <div class="ios-step">
+        <div class="ios-step-num">2</div>
+        <div class="ios-step-txt">Scroll down and tap <b>"Add to Home Screen"</b> 📲</div>
+      </div>
+      <div class="ios-step">
+        <div class="ios-step-num">3</div>
+        <div class="ios-step-txt">Tap <b>"Add"</b> in the top right corner ✅</div>
+      </div>
+    </div>
+    <button class="ios-close" onclick="closeIosInst()">Got it! 🌱</button>
+  </div>
+</div>
+
+
 </body>
 </html>
